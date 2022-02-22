@@ -14,7 +14,6 @@ const getRandomIntFromRange = function (min, max) {
 getRandomIntFromRange(4, 10);
 
 const checkStringLength = function (currentString, maxLength) {
-  maxLength = 140;
   return currentString.length <= maxLength;
 };
 
