@@ -14,8 +14,7 @@ const getRandomIntFromRange = function (min, max) {
 getRandomIntFromRange(4, 10);
 
 const checkStringLength = function (currentString, maxLength) {
-  maxLength = 140;
   return currentString.length <= maxLength;
 };
 
-checkStringLength('Длина строки', 15);
+checkStringLength('Длина строки', 10);
