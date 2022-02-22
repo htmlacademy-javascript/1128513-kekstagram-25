@@ -17,4 +17,4 @@ const checkStringLength = function (currentString, maxLength) {
   return currentString.length <= maxLength;
 };
 
-checkStringLength('Длина строки', 15);
+checkStringLength('Длина строки', 10);
