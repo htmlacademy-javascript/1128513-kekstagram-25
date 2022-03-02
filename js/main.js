@@ -49,9 +49,6 @@ const getRandomUniqueElements = (arr) => {
 
 getRandomUniqueElements(ID_LIST);
 
-
-// console.log(getRandomUniqueElements(ID_LIST));
-
 const createComment = () => ({
   id: 1,
   avatar: `img/avatar-${getRandomIntFromRange(1,6)}.svg`,
@@ -74,5 +71,3 @@ function createPhotoDescription () {
 const allDescriptions = Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
 
 allDescriptions();
-
-console.log(allDescriptions);
