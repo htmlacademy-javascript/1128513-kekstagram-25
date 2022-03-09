@@ -1,0 +1,37 @@
+import {getRandomIntFromRange} from './util.js';
+import {getRandomArrayElement} from './util.js';
+import {getRandomUniqueElements} from './util.js';
+
+
+const DESCRIPTIONS = ['Good morning world', 'Это я был на Эльбрусе', 'Жизнь прекрасна!', 'Выставка арт объектов', 'Завтрак у моря', 'Когда встал в 6 утра'];
+const COMMENTS = ['Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'В целом всё неплохо. Но не всё.'];
+const NAMES = ['Пётр Васильев','Диана Рублёва', 'Александр Тимошкин', 'Илья Гроденберг'];
+const DESCRIPTION_QUANTITY = 25;
+const COMMENTS_QUANTITY = 6;
+const ID_LIST = getRandomUniqueElements(Array.from({ length: 25 }, (v, k) => ++k));
+// ++k сначала получает элемент, затем увеличивает
+
+const createComment = (photoId, commentId) => ({
+  // ID фотографии * макс. кол-во комментариев + ID коммента
+  id: photoId * COMMENTS_QUANTITY + commentId,
+  avatar: `img/avatar-${getRandomIntFromRange(1,6)}.svg`,
+  message: getRandomArrayElement(COMMENTS),
+  name: getRandomArrayElement(NAMES),
+});
+
+const createPhotoDescription = () => {
+  const id = ID_LIST.shift();
+  const description = {
+    id: id,
+    url: `photos/${id}.jpg`,
+    description: getRandomArrayElement(DESCRIPTIONS),
+    likes: getRandomIntFromRange(15, 200),
+    comments: Array.from({length: COMMENTS_QUANTITY}, (v, k) => createComment(id, k)),
+  };
+
+  return description;
+};
+
+const createAllDescriptions = () => Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
+
+export {createAllDescriptions};
