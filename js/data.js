@@ -21,15 +21,13 @@ const createComment = (photoId, commentId) => ({
 
 const createPhotoDescription = () => {
   const id = ID_LIST.shift();
-  const description = {
+  return {
     id: id,
     url: `photos/${id}.jpg`,
     description: getRandomArrayElement(DESCRIPTIONS),
     likes: getRandomIntFromRange(15, 200),
     comments: Array.from({length: COMMENTS_QUANTITY}, (v, k) => createComment(id, k)),
   };
-
-  return description;
 };
 
 const createAllDescriptions = () => Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
