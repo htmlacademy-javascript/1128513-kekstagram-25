@@ -1,6 +1,7 @@
-import {createAllDescriptions} from './data.js';
-import './picture.js';
+import {createPhotos} from './data.js';
+import {userPhoto} from './picture.js';
 
-createAllDescriptions();
+createPhotos();
+userPhoto();
 
 
