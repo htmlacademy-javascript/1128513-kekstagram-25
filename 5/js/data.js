@@ -19,7 +19,7 @@ const createComment = (photoId, commentId) => ({
   name: getRandomArrayElement(NAMES),
 });
 
-const createPhotoDescription = () => {
+const createPhoto = () => {
   const id = ID_LIST.shift();
   return {
     id: id,
@@ -30,6 +30,5 @@ const createPhotoDescription = () => {
   };
 };
 
-const createAllDescriptions = () => Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
-
-export {createAllDescriptions};
+const createPhotos = () => Array.from({length: DESCRIPTION_QUANTITY}, createPhoto);
+export {createPhotos};
