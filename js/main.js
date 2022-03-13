@@ -1,4 +1,5 @@
-import {createAllDescriptions} from './data.js';
+import {createPhotos} from './data.js';
+import {renderUserPhotos} from './picture.js';
 
-createAllDescriptions();
-
+createPhotos();
+renderUserPhotos();
