@@ -6,7 +6,7 @@ const template = document.querySelector('#picture').content.querySelector('.pict
 const photos = createPhotos();
 const fragment = document.createDocumentFragment();
 
-const userPhoto = () => {
+const renderUserPhotos = () => {
   photos.forEach(({url, likes, comments}) => {
     const element = template.cloneNode(true);
     element.querySelector('.picture__img').src = url;
@@ -17,4 +17,4 @@ const userPhoto = () => {
   return container.appendChild(fragment);
 };
 
-export {userPhoto};
+export {renderUserPhotos};
