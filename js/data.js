@@ -8,8 +8,6 @@ const COMMENTS = ['Моя бабушка случайно чихнула с фо
 const NAMES = ['Пётр Васильев','Диана Рублёва', 'Александр Тимошкин', 'Илья Гроденберг'];
 const DESCRIPTION_QUANTITY = 25;
 const COMMENTS_QUANTITY = 6;
-const ID_LIST = getRandomUniqueElements(Array.from({ length: 25 }, (v, k) => ++k));
-// ++k сначала получает элемент, затем увеличивает
 
 const createComment = (photoId, commentId) => ({
   // ID фотографии * макс. кол-во комментариев + ID коммента
@@ -19,16 +17,19 @@ const createComment = (photoId, commentId) => ({
   name: getRandomArrayElement(NAMES),
 });
 
-const createPhoto = () => {
-  const id = ID_LIST.shift();
-  return {
-    id: id,
-    url: `photos/${id}.jpg`,
-    description: getRandomArrayElement(DESCRIPTIONS),
-    likes: getRandomIntFromRange(15, 200),
-    comments: Array.from({length: COMMENTS_QUANTITY}, (v, k) => createComment(id, k)),
+const createPhotos = () => {
+  const ids = getRandomUniqueElements(Array.from({length: 25}, (v, k) => ++k));
+  // ++k сначала получает элемент, затем увеличивает
+  const createPhoto = () => {
+    const id = ids.shift();
+    return {
+      id: id,
+      url: `photos/${id}.jpg`,
+      description: getRandomArrayElement(DESCRIPTIONS),
+      likes: getRandomIntFromRange(15, 200),
+      comments: Array.from({length: COMMENTS_QUANTITY}, (v, k) => createComment(id, k)),
+    };
   };
+  return Array.from({length: DESCRIPTION_QUANTITY}, createPhoto);
 };
-
-const createPhotos = () => Array.from({length: DESCRIPTION_QUANTITY}, createPhoto);
 export {createPhotos};
