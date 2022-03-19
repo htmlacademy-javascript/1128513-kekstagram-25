@@ -1,4 +1,5 @@
 import {createPhotos} from './data.js';
+// import {showBigPicture} from './big-picture.js';
 
 const container = document.querySelector('.pictures');
 const template = document.querySelector('#picture').content.querySelector('.picture');
@@ -16,5 +17,6 @@ const renderUserPhotos = () => {
   });
   return container.appendChild(fragment);
 };
+
 
 export {renderUserPhotos};

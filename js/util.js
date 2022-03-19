@@ -13,6 +13,7 @@ const getRandomIntFromRange = (min, max) => {
 
 const checkStringLength = (currentString, maxLength) => currentString.length <= maxLength;
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
 checkStringLength('Привет', 45);
 
@@ -37,4 +38,4 @@ const getRandomUniqueElements = (arr) => {
   return elements;
 };
 
-export {getRandomIntFromRange, getRandomArrayElement, getRandomUniqueElements};
+export {getRandomIntFromRange, getRandomArrayElement, getRandomUniqueElements, isEscapeKey};
