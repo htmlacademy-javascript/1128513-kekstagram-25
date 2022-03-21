@@ -4,17 +4,18 @@ const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const commentsCount = bigPicture.querySelector('.comments-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
-const commentsContainer = bigPicture.querySelector('social__comments');
+const commentsContainer = bigPicture.querySelector('.social__comments');
 const body = document.querySelector('body');
-
-const commentsFragment = document.createDocumentFragment();
 
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeBigPicture ();
-    document.removeEventListener('keydown', onPopupEscKeydown);
   }
+};
+
+const onPopupCloseButtonClick = () => {
+  closeBigPicture();
 };
 
 function closeBigPicture () {
@@ -22,21 +23,31 @@ function closeBigPicture () {
   body.classList.remove('modal-open');
   commentsCount.classList.remove('hidden');
   commentsLoader.classList.remove('hidden');
-  commentsContainer.innerHTML = '';
+  document.removeEventListener('keydown', onPopupEscKeydown);
+  document.removeEventListener('click', onPopupCloseButtonClick);
 }
 
-closeButton.addEventListener ('click', closeBigPicture);
+const renderComments = (comments) => {
+  commentsContainer.innerHTML = '';
+  const commentsFragment = document.createDocumentFragment();
+  comments.forEach((comment) => {
+    const newCommentItem  = document.createElement('li');
+    newCommentItem.classList.add('social__comment');
+    const commentImage = document.createElement('img');
+    commentImage.classList.add('social__picture');
+    commentImage.src = comment.avatar;
+    commentImage.alt = comment.name;
+    commentImage.width = 35;
+    commentImage.height = 35;
+    newCommentItem.appendChild(commentImage);
 
-const renderComment = (comment) => {
-  const newCommentItem  = document.createElement('li');
-  newCommentItem.classList.add('social__comment');
-  newCommentItem.innerHTML = `<img
-  class="social__picture"
-  src="img/${comment.avatar}"
-  alt="${comment.name}"
-  width="35" height="35">
-<p class="social__text">${comment.message}</p>`;
-  return newCommentItem;
+    const commentText = document.createElement('p');
+    commentText.classList.add('social__text');
+    commentText.textContent = comment.message;
+    newCommentItem.appendChild(commentText);
+    commentsFragment.appendChild(newCommentItem);
+  });
+  commentsContainer.appendChild(commentsFragment);
 };
 
 const showBigPicture = (picture) => {
@@ -49,11 +60,9 @@ const showBigPicture = (picture) => {
   bigPicture.querySelector('.comments-count').textContent = picture.comments.length;
   bigPicture.querySelector('.social__caption').textContent = picture.description;
 
-  picture.comments.forEach((comment) => {
-    commentsFragment.appendChild(renderComment(comment));
-  });
-  commentsContainer.appendChild(commentsFragment);
+  renderComments(picture.comments);
 
+  closeButton.addEventListener('click', onPopupCloseButtonClick);
   document.addEventListener('keydown', onPopupEscKeydown);
 };
 
