@@ -7,19 +7,22 @@ const template = document.querySelector('#picture').content.querySelector('.pict
 const photos = createPhotos();
 const fragment = document.createDocumentFragment();
 
+const createUserPhoto = (picture) => {
+  const element = template.cloneNode(true);
+  element.querySelector('.picture__img').src = picture.url;
+  element.querySelector('.picture__likes').textContent = picture.likes;
+  element.querySelector('.picture__comments').textContent = picture.comments.length;
+  element.addEventListener('click', () => {
+    showBigPicture(picture);
+  });
+  fragment.appendChild(element);
+};
+
+
 const renderUserPhotos = () => {
   photos.forEach((picture) => {
-    const {url,comments, likes} = picture;
-    const element = template.cloneNode(true);
-    element.querySelector('.picture__img').src = url;
-    element.querySelector('.picture__likes').textContent = likes;
-    element.querySelector('.picture__comments').textContent = comments.length;
-    element.addEventListener('click', () => {
-      showBigPicture(picture);
-    });
-    fragment.appendChild(element);
+    createUserPhoto(picture);
   });
-
   return container.appendChild(fragment);
 };
 

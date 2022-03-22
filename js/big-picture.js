@@ -27,25 +27,29 @@ function closeBigPicture () {
   document.removeEventListener('click', onPopupCloseButtonClick);
 }
 
+const createCommentItem = (comment) => {
+  const newCommentItem  = document.createElement('li');
+  newCommentItem.classList.add('social__comment');
+  const commentImage = document.createElement('img');
+  commentImage.classList.add('social__picture');
+  commentImage.src = comment.avatar;
+  commentImage.alt = comment.name;
+  commentImage.width = 35;
+  commentImage.height = 35;
+  newCommentItem.appendChild(commentImage);
+
+  const commentText = document.createElement('p');
+  commentText.classList.add('social__text');
+  commentText.textContent = comment.message;
+  newCommentItem.appendChild(commentText);
+  return newCommentItem;
+};
+
 const renderComments = (comments) => {
   commentsContainer.innerHTML = '';
   const commentsFragment = document.createDocumentFragment();
   comments.forEach((comment) => {
-    const newCommentItem  = document.createElement('li');
-    newCommentItem.classList.add('social__comment');
-    const commentImage = document.createElement('img');
-    commentImage.classList.add('social__picture');
-    commentImage.src = comment.avatar;
-    commentImage.alt = comment.name;
-    commentImage.width = 35;
-    commentImage.height = 35;
-    newCommentItem.appendChild(commentImage);
-
-    const commentText = document.createElement('p');
-    commentText.classList.add('social__text');
-    commentText.textContent = comment.message;
-    newCommentItem.appendChild(commentText);
-    commentsFragment.appendChild(newCommentItem);
+    commentsFragment.appendChild(createCommentItem(comment));
   });
   commentsContainer.appendChild(commentsFragment);
 };
