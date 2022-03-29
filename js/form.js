@@ -1,5 +1,3 @@
-// import {showBigPicture} from './big-picture.js';
-// import {renderUserPhotos} from './pictures.js';
 import {isEscapeKey} from './util.js';
 
 const imgUploadField = document.querySelector('#upload-file');
@@ -13,15 +11,6 @@ const commentsField = document.querySelector('.text__description');
 const MAX_STRING_LENGTH = 140;
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const HASHTAGS_QUANTITY = 5;
-
-const pristine = new Pristine(form, {
-  classTo: 'text',
-  errorClass: 'text--invalid',
-  successClass: 'text-valid',
-  errorTextParent: 'text',
-  errorTextTag: 'div',
-  errorTextClass: 'text__error'
-});
 
 const checkCommentsLength = (value) => value.length <= MAX_STRING_LENGTH;
 
@@ -55,20 +44,12 @@ const checkHashtagsSymbols = (string) => {
 };
 
 
-pristine.addValidator(commentsField, checkCommentsLength, `Не более ${MAX_STRING_LENGTH} символов`);
-pristine.addValidator(hashtagsField, getUniqueHashtags, 'Хэштеги не могут повторяться');
-pristine.addValidator(hashtagsField, checkQuantity, 'Не более 5 хэштегов');
-pristine.addValidator(hashtagsField, getHashtagsToLowerCase, '');
-pristine.addValidator(hashtagsField, checkHashtagsSymbols, 'Хэштег должен начинатьтся с #, содержать только буквы и цифры, не более 20 символов');
-
-
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
     closeUploadPopup();
   }
 };
-
 
 const onPopupCloseButtonClick = () => {
   closeUploadPopup ();
@@ -79,21 +60,57 @@ function closeUploadPopup  () {
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   document.removeEventListener('click', onPopupCloseButtonClick);
-  imgUploadField.value = '';
+  imgUploadField.reset();
 }
+// событие focus вызывается тогда, когда пользователь фокусируется на элементе или просто выбирает его, а blur – когда фокус исчезает
+const onFocusBlurEscKeydown = () => {
+  commentsField.addEventListener('focus', () => {
+    document.removeEventListener('keydown', onPopupEscKeydown);
+  });
+  commentsField.addEventListener('blur', () => {
+    document.addEventListener('keydown', onPopupEscKeydown);
+  });
+  hashtagsField.addEventListener('focus', () => {
+    document.removeEventListener('keydown', onPopupEscKeydown);
+  });
+  hashtagsField.addEventListener('blur', () => {
+    document.addEventListener('keydown', onPopupEscKeydown);
+  });
+};
 
 const showUploadPopup = () => {
   editPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
   buttonCancel.addEventListener('click', onPopupCloseButtonClick);
   document.addEventListener('keydown',onPopupEscKeydown);
+  onFocusBlurEscKeydown();
 };
 
-form.addEventListener('submit', (evt) => {
-  const valid = pristine.validate();
-  if (!valid) {
-    evt.preventDefault();
-  }
-});
+const validateForm = () => {
+  const pristine = new Pristine(form, {
+    classTo: 'text',
+    errorClass: 'text--invalid',
+    successClass: 'text-valid',
+    errorTextParent: 'text',
+    errorTextTag: 'div',
+    errorTextClass: 'text__error'
+  });
+  pristine.addValidator(commentsField, checkCommentsLength, `Не более ${MAX_STRING_LENGTH} символов`);
+  pristine.addValidator(hashtagsField, getUniqueHashtags, 'Хэштеги не могут повторяться');
+  pristine.addValidator(hashtagsField, checkQuantity, 'Не более 5 хэштегов');
+  pristine.addValidator(hashtagsField, getHashtagsToLowerCase, '');
+  pristine.addValidator(hashtagsField, checkHashtagsSymbols, 'Хэштег должен начинатьтся с #, содержать только буквы и цифры, не более 20 символов');
+  form.addEventListener('submit', (evt) => {
+    const isValid = pristine.validate();
+    if (!isValid) {
+      evt.preventDefault();
+    }
+  });
+};
 
-showUploadPopup ();
+const renderUploadForm = () => {
+  imgUploadField.addEventListener('change', showUploadPopup);
+  validateForm();
+};
+
+export {renderUploadForm};

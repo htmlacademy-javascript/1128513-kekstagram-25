@@ -1,8 +1,9 @@
 import {createPhotos} from './data.js';
 import {renderUserPhotos} from './pictures.js';
-import './form-validate.js';
+import {renderUploadForm} from './form.js';
 
 
 createPhotos();
 renderUserPhotos();
+renderUploadForm();
 
