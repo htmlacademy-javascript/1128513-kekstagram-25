@@ -1,22 +1,20 @@
-import {showBigPicture} from './big-picture.js';
-import {renderUserPhotos} from './pictures.js';
+// import {showBigPicture} from './big-picture.js';
+// import {renderUserPhotos} from './pictures.js';
 import {isEscapeKey} from './util.js';
 
-
-const imgUpload = document.querySelector('.img-upload__overlay');
-const openForm = document.querySelector('#upload-file');
+const imgUploadField = document.querySelector('#upload-file');
+const editPhoto = document.querySelector('.img-upload__overlay');
 const buttonSubmit = document.querySelector('.img-upload__submit');
-const imgUploadForm = document.querySelector('.img-upload__form');
-const buttonCancel = imgUpload.querySelector('.img-upload__cancel');
+const form = document.querySelector('.img-upload__form');
+const buttonCancel = document.querySelector('.img-upload__cancel');
 const body = document.querySelector('body');
-const hashtagField = imgUpload.querySelector('.text__hashtags');
-const commentField = imgUpload.querySelector('.text__description');
+const hashtagsField = document.querySelector('.text__hashtags');
+const commentsField = document.querySelector('.text__description');
 const MAX_STRING_LENGTH = 140;
 const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
 const HASHTAGS_QUANTITY = 5;
-// const imgContainer = imgUpload .querySelector('.img-upload__wrapper');
 
-const pristine = new Pristine(imgUploadForm, {
+const pristine = new Pristine(form, {
   classTo: 'text',
   errorClass: 'text--invalid',
   successClass: 'text-valid',
@@ -57,31 +55,11 @@ const checkHashtagsSymbols = (string) => {
 };
 
 
-pristine.addValidator(commentField, checkCommentsLength, `Не более ${MAX_STRING_LENGTH} символов`);
-pristine.addValidator(hashtagField, getUniqueHashtags, 'Хэштеги не могут повторяться');
-pristine.addValidator(hashtagField, checkQuantity, 'Не более 5 хэштегов');
-pristine.addValidator(hashtagField, getHashtagsToLowerCase, '');
-pristine.addValidator(hashtagField, checkHashtagsSymbols, 'Хэштег должен начинатьтся с #, содержать только буквы и цифры, не более 20 символов');
-
-
-// const checkValidity = () => {
-//   const valid = pristine.validate();
-//   if (valid) {
-//     buttonSubmit.disabled = false;
-//   } else {
-//     buttonSubmit.disabled = true;
-//   }
-// };
-
-// const activateFormValidation = () => {
-//   commentField.addEventListener('input', checkValidity);
-//   hashtagField.addEventListener('input', checkValidity);
-// };
-
-// const deactivateFormValidation = () => {
-//   commentField.removeEventListener('input', checkValidity);
-//   hashtagField.removeListener('input', checkValidity);
-// };
+pristine.addValidator(commentsField, checkCommentsLength, `Не более ${MAX_STRING_LENGTH} символов`);
+pristine.addValidator(hashtagsField, getUniqueHashtags, 'Хэштеги не могут повторяться');
+pristine.addValidator(hashtagsField, checkQuantity, 'Не более 5 хэштегов');
+pristine.addValidator(hashtagsField, getHashtagsToLowerCase, '');
+pristine.addValidator(hashtagsField, checkHashtagsSymbols, 'Хэштег должен начинатьтся с #, содержать только буквы и цифры, не более 20 символов');
 
 
 const onPopupEscKeydown = (evt) => {
@@ -97,17 +75,25 @@ const onPopupCloseButtonClick = () => {
 };
 
 function closeUploadPopup  () {
-  imgUpload.classList.add('hidden');
+  editPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   document.removeEventListener('click', onPopupCloseButtonClick);
+  imgUploadField.value = '';
 }
 
 const showUploadPopup = () => {
-  imgUpload.classList.remove('hidden');
+  editPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
   buttonCancel.addEventListener('click', onPopupCloseButtonClick);
   document.addEventListener('keydown',onPopupEscKeydown);
 };
+
+form.addEventListener('submit', (evt) => {
+  const valid = pristine.validate();
+  if (!valid) {
+    evt.preventDefault();
+  }
+});
 
 showUploadPopup ();
