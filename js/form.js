@@ -60,7 +60,7 @@ function closeUploadPopup  () {
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   document.removeEventListener('click', onPopupCloseButtonClick);
-  imgUploadField.reset();
+  form.reset();
 }
 // событие focus вызывается тогда, когда пользователь фокусируется на элементе или просто выбирает его, а blur – когда фокус исчезает
 const onFocusBlurEscKeydown = () => {
