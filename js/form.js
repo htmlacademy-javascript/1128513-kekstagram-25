@@ -5,6 +5,7 @@ const editPhoto = document.querySelector('.img-upload__overlay');
 const buttonSubmit = document.querySelector('.img-upload__submit');
 const form = document.querySelector('.img-upload__form');
 const buttonCancel = document.querySelector('.img-upload__cancel');
+const imgPrewiev = document.querySelector('.img-upload__preview').querySelector('img');
 const body = document.querySelector('body');
 const hashtagsField = document.querySelector('.text__hashtags');
 const commentsField = document.querySelector('.text__description');
@@ -78,7 +79,8 @@ const onFocusBlurEscKeydown = () => {
   });
 };
 
-const showUploadPopup = () => {
+const showUploadPopup = (evt) => {
+  imgPrewiev.src = URL.createObjectURL(evt.target.files[0]);
   editPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
   buttonCancel.addEventListener('click', onPopupCloseButtonClick);
