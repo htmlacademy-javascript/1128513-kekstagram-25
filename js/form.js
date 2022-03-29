@@ -2,7 +2,7 @@ import {isEscapeKey} from './util.js';
 
 const imgUploadField = document.querySelector('#upload-file');
 const editPhoto = document.querySelector('.img-upload__overlay');
-const buttonSubmit = document.querySelector('.img-upload__submit');
+// const buttonSubmit = document.querySelector('.img-upload__submit');
 const form = document.querySelector('.img-upload__form');
 const buttonCancel = document.querySelector('.img-upload__cancel');
 const imgPrewiev = document.querySelector('.img-upload__preview').querySelector('img');
@@ -63,6 +63,7 @@ function closeUploadPopup  () {
   document.removeEventListener('click', onPopupCloseButtonClick);
   form.reset();
 }
+
 // событие focus вызывается тогда, когда пользователь фокусируется на элементе или просто выбирает его, а blur – когда фокус исчезает
 const onFocusBlurEscKeydown = () => {
   commentsField.addEventListener('focus', () => {
