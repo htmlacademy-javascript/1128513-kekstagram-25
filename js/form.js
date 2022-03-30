@@ -1,17 +1,17 @@
 import {isEscapeKey} from './util.js';
 
+const MAX_STRING_LENGTH = 140;
+const HASHTAGS_QUANTITY = 5;
 const imgUploadField = document.querySelector('#upload-file');
 const editPhoto = document.querySelector('.img-upload__overlay');
-// const buttonSubmit = document.querySelector('.img-upload__submit');
 const form = document.querySelector('.img-upload__form');
 const buttonCancel = document.querySelector('.img-upload__cancel');
-const imgPrewiev = document.querySelector('.img-upload__preview').querySelector('img');
+const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
 const body = document.querySelector('body');
 const hashtagsField = document.querySelector('.text__hashtags');
 const commentsField = document.querySelector('.text__description');
-const MAX_STRING_LENGTH = 140;
-const re = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
-const HASHTAGS_QUANTITY = 5;
+const regex = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+
 
 const checkCommentsLength = (value) => value.length <= MAX_STRING_LENGTH;
 
@@ -24,14 +24,7 @@ const getUniqueHashtags = (string) => {
   return hashtags.length === uniqueSet.size;
 };
 
-const checkQuantity = (string) => {
-  const hashtags = getHashtags(string);
-  if (hashtags.length <= HASHTAGS_QUANTITY) {
-    return true;
-  } else if (hashtags.length > HASHTAGS_QUANTITY) {
-    return false;
-  }
-};
+const checkQuantity = (string) => getHashtags(string).length <= HASHTAGS_QUANTITY;
 
 const getHashtagsToLowerCase = (string) => {
   const hashtags = getHashtags(string);
@@ -41,7 +34,7 @@ const getHashtagsToLowerCase = (string) => {
 
 const checkHashtagsSymbols = (string) => {
   const hashtags = getHashtags(string);
-  return hashtags.every((element) => re.test(element));
+  return hashtags.every((element) => regex.test(element));
 };
 
 
@@ -81,7 +74,7 @@ const onFocusBlurEscKeydown = () => {
 };
 
 const showUploadPopup = (evt) => {
-  imgPrewiev.src = URL.createObjectURL(evt.target.files[0]);
+  imgPreview.src = URL.createObjectURL(evt.target.files[0]);
   editPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
   buttonCancel.addEventListener('click', onPopupCloseButtonClick);
@@ -104,8 +97,7 @@ const validateForm = () => {
   pristine.addValidator(hashtagsField, getHashtagsToLowerCase, '');
   pristine.addValidator(hashtagsField, checkHashtagsSymbols, 'Хэштег должен начинатьтся с #, содержать только буквы и цифры, не более 20 символов');
   form.addEventListener('submit', (evt) => {
-    const isValid = pristine.validate();
-    if (!isValid) {
+    if (!pristine.validate()) {
       evt.preventDefault();
     }
   });
