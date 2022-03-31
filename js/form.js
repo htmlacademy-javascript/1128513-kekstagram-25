@@ -11,6 +11,13 @@ const body = document.querySelector('body');
 const hashtagsField = document.querySelector('.text__hashtags');
 const commentsField = document.querySelector('.text__description');
 const regex = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const scaleValue = document.querySelector('.scale__control--value');
+const scaleContainer = document.querySelector('.img-upload__scale');
+const slider = document.querySelector('.effect-level__slider');
+const effectValue = document.querySelector('.effect-level__value');
+const scaleStep = 25;
+const minScale = 25;
+const maxScale = 100;
 
 
 const checkCommentsLength = (value) => value.length <= MAX_STRING_LENGTH;
@@ -49,11 +56,55 @@ const onPopupCloseButtonClick = () => {
   closeUploadPopup ();
 };
 
+noUiSlider.create(slider, {
+  range: {
+    min: 0,
+    max: 1,
+  },
+  start: 0,
+  step: 0.1,
+  connect: 'lower',
+  format: {
+    to: (value) => {
+      if (Number.isInteger(value)) {
+        return value.toFixed(0);
+      }
+      return value.toFixed(1);
+    },
+    from: (value) => parseFloat(value),
+  },
+});
+
+slider.noUiSlider.on('update', () => {
+  effectValue.value = slider.noUiSlider.get();
+});
+
+const onScaleButtonClick = (evt) => {
+  const scaleInput = Number.parseInt(scaleValue.value, 10);
+  let scaleCount;
+  const buttonScale = evt.target;
+  if (buttonScale.matches('.scale__control--bigger') && scaleInput < maxScale) {
+    scaleCount =  scaleInput + scaleStep;
+    scaleValue.value = `${scaleCount}%`;
+  } else {
+    scaleValue.value = `${maxScale}%`;
+  }
+
+  if (buttonScale.matches('.scale__control--smaller') && scaleInput > minScale) {
+    scaleCount = scaleInput - scaleStep;
+    scaleValue.value = `${scaleCount}%`;
+  } else {
+    scaleValue.value = `${minScale}%`;
+  }
+  imgPreview.style.transform = `scale(${scaleCount / 100})`;
+};
+
 function closeUploadPopup  () {
   editPhoto.classList.add('hidden');
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   document.removeEventListener('click', onPopupCloseButtonClick);
+  scaleContainer.removeEventListener('click', onScaleButtonClick);
   form.reset();
 }
 
@@ -73,14 +124,16 @@ const onFocusBlurEscKeydown = () => {
   });
 };
 
-const showUploadPopup = (evt) => {
+
+function showUploadPopup (evt) {
   imgPreview.src = URL.createObjectURL(evt.target.files[0]);
   editPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
   buttonCancel.addEventListener('click', onPopupCloseButtonClick);
   document.addEventListener('keydown',onPopupEscKeydown);
   onFocusBlurEscKeydown();
-};
+  scaleContainer.addEventListener('click', onScaleButtonClick);
+}
 
 const validateForm = () => {
   const pristine = new Pristine(form, {
