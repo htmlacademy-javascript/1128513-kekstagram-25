@@ -6,4 +6,3 @@ import {renderUploadForm} from './form.js';
 createPhotos();
 renderUserPhotos();
 renderUploadForm();
-
