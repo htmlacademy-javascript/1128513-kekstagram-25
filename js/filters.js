@@ -61,6 +61,7 @@ const scaleStep = 25;
 const minScale = 25;
 const maxScale = 100;
 
+
 const onScaleButtonClick = (evt) => {
   const scaleInput = Number.parseInt(scaleValue.value, 10);
   let scaleCount;
@@ -69,8 +70,19 @@ const onScaleButtonClick = (evt) => {
     scaleCount =  scaleInput + scaleStep;
     scaleValue.value = `${scaleCount}%`;
   }
+
   if (buttonScale.matches('.scale__control--smaller') && scaleInput > minScale) {
     scaleCount = scaleInput - scaleStep;
+    scaleValue.value = `${scaleCount}%`;
+  }
+
+  if (scaleCount >= maxScale) {
+    scaleCount = maxScale;
+    scaleValue.value = `${scaleCount}%`;
+  }
+
+  if (scaleCount <= minScale) {
+    scaleCount = minScale;
     scaleValue.value = `${scaleCount}%`;
   }
   imgPreview.style.transform = `scale(${scaleCount / 100})`;
