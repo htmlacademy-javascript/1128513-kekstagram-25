@@ -1,53 +1,63 @@
 const effects = {
   chrome: {
-    range: {
-      min: 0,
-      max: 1,
-    },
-    start: 0,
-    step: 0.1,
     filter: 'grayscale',
     units: '',
+    options: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+    }
   },
   sepia: {
-    range: {
-      min: 0,
-      max: 1,
-    },
-    start: 0,
-    step: 0.1,
     filter: 'sepia',
-    units: ''
+    units: '',
+    options: {
+      range: {
+        min: 0,
+        max: 1,
+      },
+      start: 1,
+      step: 0.1,
+    }
   },
   marvin: {
-    range: {
-      min: 0,
-      max: 100,
-    },
-    start: 0,
-    step: 1,
     filter: 'invert',
-    units: '%'
+    units: '%',
+    options: {
+      range: {
+        min: 0,
+        max: 100,
+      },
+      start: 100,
+      step: 1,
+    }
   },
   phobos: {
-    range: {
-      min: 0,
-      max: 3,
-    },
-    start: 0,
-    step: 0.1,
     filter: 'blur',
     units: 'px',
+    options: {
+      range: {
+        min: 0,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+    }
   },
   heat: {
-    range: {
-      min: 1,
-      max: 3,
-    },
-    start: 0,
-    step: 0.1,
     filter: 'brightness',
     units: '',
+    options: {
+      range: {
+        min: 1,
+        max: 3,
+      },
+      start: 3,
+      step: 0.1,
+    }
   },
 };
 const scaleValue = document.querySelector('.scale__control--value');
@@ -88,24 +98,26 @@ const onScaleButtonClick = (evt) => {
   imgPreview.style.transform = `scale(${scaleCount / 100})`;
 };
 
-noUiSlider.create(slider, {
-  range: {
-    min: 0,
-    max: 100,
-  },
-  start: 100,
-  step: 0.1,
-  connect: 'lower',
-  format: {
-    to: (value) => {
-      if (Number.isInteger(value)) {
-        return value.toFixed(0);
-      }
-      return value.toFixed(1);
+const initEffects = () => {
+  noUiSlider.create(slider, {
+    range: {
+      min: 0,
+      max: 100,
     },
-    from: (value) => parseFloat(value),
-  },
-});
+    start: 100,
+    step: 0.1,
+    connect: 'lower',
+    format: {
+      to: (value) => {
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: (value) => parseFloat(value),
+    },
+  });
+};
 
 const onFilterButtonChange = (evt) => {
   const evtHandler = evt.target.value;
@@ -116,7 +128,7 @@ const onFilterButtonChange = (evt) => {
     sliderWrapper.classList.remove('hidden');
     imgPreview.removeAttribute('class');
     imgPreview.classList.add(`effects__preview--${evtHandler}`);
-    slider.noUiSlider.updateOptions(effects[evtHandler].filter);
+    slider.noUiSlider.updateOptions(effects[evtHandler].options);
     slider.noUiSlider.on('update', () => {
       effectValue.value = slider.noUiSlider.get();
       imgPreview.style.filter = `${effects[evtHandler].filter}(${effectValue.value}${effects[evtHandler].units})`;
@@ -124,4 +136,4 @@ const onFilterButtonChange = (evt) => {
   }
 };
 
-export {onFilterButtonChange, onScaleButtonClick, scaleContainer, effectList, sliderWrapper};
+export {onFilterButtonChange, onScaleButtonClick, initEffects, scaleContainer, effectList, sliderWrapper};
