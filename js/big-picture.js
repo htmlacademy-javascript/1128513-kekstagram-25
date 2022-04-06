@@ -52,8 +52,8 @@ const createCommentItem = (comment) => {
 const renderComments = (comments) => {
   commentsContainer.innerHTML = '';
   const commentsFragment = document.createDocumentFragment();
-  const CommentsList = comments.slice();
-  const commentsToShow = CommentsList.slice(offset, offset + MAX_COMMENTS_TO_SHOW);
+  const сommentsList = comments.slice();
+  const commentsToShow = сommentsList.slice(offset, offset + MAX_COMMENTS_TO_SHOW);
   if (commentsToShow.length >= MAX_COMMENTS_TO_SHOW) {
     loadCommentsButton.classList.remove('hidden');
   }
