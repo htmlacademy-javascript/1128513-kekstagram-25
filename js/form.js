@@ -1,4 +1,5 @@
 import {isEscapeKey} from './util.js';
+import {onFilterButtonChange, onScaleButtonClick, scaleContainer, effectList, sliderWrapper} from './filters.js';
 
 const MAX_STRING_LENGTH = 140;
 const HASHTAGS_QUANTITY = 5;
@@ -54,6 +55,10 @@ function closeUploadPopup  () {
   body.classList.remove('modal-open');
   document.removeEventListener('keydown', onPopupEscKeydown);
   document.removeEventListener('click', onPopupCloseButtonClick);
+  scaleContainer.removeEventListener('click', onScaleButtonClick);
+  effectList.removeEventListener('change', onFilterButtonChange);
+  imgPreview.removeAttribute('class');
+  imgPreview.removeAttribute('style');
   form.reset();
 }
 
@@ -73,14 +78,18 @@ const onFocusBlurEscKeydown = () => {
   });
 };
 
-const showUploadPopup = (evt) => {
+
+function showUploadPopup (evt) {
   imgPreview.src = URL.createObjectURL(evt.target.files[0]);
   editPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
   buttonCancel.addEventListener('click', onPopupCloseButtonClick);
   document.addEventListener('keydown',onPopupEscKeydown);
   onFocusBlurEscKeydown();
-};
+  sliderWrapper.classList.add('hidden');
+  scaleContainer.addEventListener('click', onScaleButtonClick);
+  effectList.addEventListener('change', onFilterButtonChange);
+}
 
 const validateForm = () => {
   const pristine = new Pristine(form, {

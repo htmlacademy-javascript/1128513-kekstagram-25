@@ -7,6 +7,7 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentsContainer = bigPicture.querySelector('.social__comments');
 const body = document.querySelector('body');
 
+
 const onPopupEscKeydown = (evt) => {
   if (isEscapeKey(evt)) {
     evt.preventDefault();
@@ -53,6 +54,7 @@ const renderComments = (comments) => {
   });
   commentsContainer.appendChild(commentsFragment);
 };
+
 
 const showBigPicture = (picture) => {
   bigPicture.classList.remove('hidden');
