@@ -8,7 +8,7 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentsContainer = bigPicture.querySelector('.social__comments');
 const loadCommentsButton = bigPicture.querySelector('.social__comments-loader');
 const body = document.querySelector('body');
-let offset = 0;
+let offset;
 
 
 const onPopupEscKeydown = (evt) => {
