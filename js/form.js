@@ -105,11 +105,21 @@ const validateForm = () => {
   pristine.addValidator(hashtagsField, checkQuantity, 'Не более 5 хэштегов');
   pristine.addValidator(hashtagsField, getHashtagsToLowerCase, '');
   pristine.addValidator(hashtagsField, checkHashtagsSymbols, 'Хэштег должен начинатьтся с #, содержать только буквы и цифры, не более 20 символов');
-  form.addEventListener('submit', (evt) => {
-    if (!pristine.validate()) {
-      evt.preventDefault();
-    }
-  });
+  const submitForm = (onSuccess) => {
+    form.addEventListener('submit', (evt) => {
+      if (!pristine.validate()) {
+        evt.preventDefault();
+      }
+      const formData = new FormData(evt.target);
+      fetch(
+        'https://25.javascript.pages.academy/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      );
+    });
+  };
 };
 
 const renderUploadForm = () => {

@@ -1,11 +1,14 @@
 import {isEscapeKey} from './util.js';
 
+const MAX_COMMENTS_TO_SHOW = 5;
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const commentsCount = bigPicture.querySelector('.comments-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentsContainer = bigPicture.querySelector('.social__comments');
+const loadCommentsButton = bigPicture.querySelector('.social__comments-loader');
 const body = document.querySelector('body');
+let offset = 0;
 
 
 const onPopupEscKeydown = (evt) => {
@@ -47,12 +50,31 @@ const createCommentItem = (comment) => {
 };
 
 const renderComments = (comments) => {
+  commentsLoader.classList.remove('hidden');
+  const сommentsList = comments.slice();
+  console.log(сommentsList);
+  const renderCommentsSlice = () => {
+    const commentsFragment = document.createDocumentFragment();
+    const commentsToShow = сommentsList.slice(offset, offset + MAX_COMMENTS_TO_SHOW);
+    if (commentsToShow.length < MAX_COMMENTS_TO_SHOW) {
+
+    }
+    console.log(commentsToShow);
+    commentsToShow.forEach((comment) => {
+      commentsFragment.appendChild(createCommentItem(comment));
+    });
+    commentsContainer.appendChild(commentsFragment);
+    if (сommentsList.length === offset + commentsToShow.length) {
+      loadCommentsButton.classList.add('hidden');
+    }
+  };
   commentsContainer.innerHTML = '';
-  const commentsFragment = document.createDocumentFragment();
-  comments.forEach((comment) => {
-    commentsFragment.appendChild(createCommentItem(comment));
+  renderCommentsSlice();
+  commentsLoader.addEventListener('click', () => {
+    offset += MAX_COMMENTS_TO_SHOW;
+    console.log(offset);
+    renderCommentsSlice();
   });
-  commentsContainer.appendChild(commentsFragment);
 };
 
 
@@ -67,6 +89,10 @@ const showBigPicture = (picture) => {
   bigPicture.querySelector('.social__caption').textContent = picture.description;
 
   renderComments(picture.comments);
+
+  // loadCommentsButton.addEventListener('click', () => {
+
+  // });
 
   closeButton.addEventListener('click', onPopupCloseButtonClick);
   document.addEventListener('keydown', onPopupEscKeydown);

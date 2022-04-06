@@ -7,11 +7,10 @@ const DESCRIPTIONS = ['Good morning world', 'Это я был на Эльбру�
 const COMMENTS = ['Моя бабушка случайно чихнула с фотоаппаратом в руках и у неё получилась фотография лучше.', 'В целом всё неплохо. Но не всё.'];
 const NAMES = ['Пётр Васильев','Диана Рублёва', 'Александр Тимошкин', 'Илья Гроденберг'];
 const DESCRIPTION_QUANTITY = 25;
-const COMMENTS_QUANTITY = 6;
 
 const createComment = (photoId, commentId) => ({
   // ID фотографии * макс. кол-во комментариев + ID коммента
-  id: photoId * COMMENTS_QUANTITY + commentId,
+  id: photoId + commentId,
   avatar: `img/avatar-${getRandomIntFromRange(1,6)}.svg`,
   message: getRandomArrayElement(COMMENTS),
   name: getRandomArrayElement(NAMES),
@@ -22,12 +21,13 @@ const createPhotos = () => {
   // ++k сначала получает элемент, затем увеличивает
   const createPhoto = () => {
     const id = ids.shift();
+    const commentsArray = getRandomIntFromRange(1,15);
     return {
       id: id,
       url: `photos/${id}.jpg`,
       description: getRandomArrayElement(DESCRIPTIONS),
       likes: getRandomIntFromRange(15, 200),
-      comments: Array.from({length: COMMENTS_QUANTITY}, (v, k) => createComment(id, k)),
+      comments: Array.from({length: commentsArray}, (v, k) => createComment(id, k)),
     };
   };
   return Array.from({length: DESCRIPTION_QUANTITY}, createPhoto);
