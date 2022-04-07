@@ -130,11 +130,12 @@ const submitForm = (onSuccess) => {
           onSuccess();
           unblockSubmitButton();
           ShowMessageSucces();
+          closeUploadPopup();
         },
         () => {
-          showAlert('Не удалось отправить форму. Попробуйте ещё раз');
           unblockSubmitButton();
           ShowMessageErorr();
+          closeUploadPopup();
         },
         new FormData(evt.target),
       );

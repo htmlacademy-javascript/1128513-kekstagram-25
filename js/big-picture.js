@@ -51,8 +51,6 @@ const createCommentItem = (comment) => {
 
 const renderComments = (comments) => {
   commentsLoader.classList.remove('hidden');
-  // const сommentsList = comments.slice();
-  // console.log(сommentsList);
   const renderCommentsSlice = () => {
     const commentsFragment = document.createDocumentFragment();
     const commentsToShow = comments.slice(offset, offset + MAX_COMMENTS_TO_SHOW);
@@ -63,15 +61,11 @@ const renderComments = (comments) => {
     if (comments.length === offset + commentsToShow.length) {
       loadCommentsButton.classList.add('hidden');
     }
-    // console.log(comments.length);
-    // console.log(offset + commentsToShow.length);
-    // console.log(commentsToShow.length);
   };
   commentsContainer.innerHTML = '';
   renderCommentsSlice();
   commentsLoader.addEventListener('click', () => {
     offset += MAX_COMMENTS_TO_SHOW;
-    console.log(offset);
     renderCommentsSlice();
   });
 };
@@ -94,17 +88,3 @@ const showBigPicture = (picture) => {
 };
 
 export {showBigPicture};
-
-// const getData = (onSuccess, onFail) => {
-//   fetch('https://25.javascript.pages.academy/kekstagram/data')
-//     .then((response) => {
-//       if (response.ok) {
-//         response.json();
-//       } else {
-//         onFail();
-//       }
-//     })
-//     .catch(() => {
-//       onFail();
-//     });
-// };

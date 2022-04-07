@@ -14,9 +14,8 @@ const ShowMessageSucces = () => {
   const buttonSuccess = document.querySelector('.success__button');
   const sectionSuccess = document.querySelector('.success');
   const successInner = document.querySelector('.success__inner');
-  sectionSuccess.addEventListener('keydown', (evt) => {
+  document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
-      evt.preventdefault();
       sectionSuccess.remove();
     }
   });
@@ -39,9 +38,8 @@ const ShowMessageErorr = () => {
   const buttonError = document.querySelector('.error__button');
   const sectionError = document.querySelector('.error');
   const errorInner = document.querySelector('.error__inner');
-  sectionError.addEventListener('keydown', (evt) => {
+  document.addEventListener('keydown', (evt) => {
     if (isEscapeKey(evt)) {
-      evt.preventdefault();
       sectionError.remove();
     }
   });
@@ -58,4 +56,3 @@ const ShowMessageErorr = () => {
 };
 
 export {ShowMessageSucces, ShowMessageErorr};
-

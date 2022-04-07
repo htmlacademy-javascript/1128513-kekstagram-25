@@ -1,10 +1,8 @@
-// import {createPhotos} from './data.js';
 import {showBigPicture} from './big-picture.js';
 
 const container = document.querySelector('.pictures');
 const template = document.querySelector('#picture').content.querySelector('.picture');
 
-// const photos = createPhotos();
 const fragment = document.createDocumentFragment();
 
 // функция создающая один фрагмент фотографии
