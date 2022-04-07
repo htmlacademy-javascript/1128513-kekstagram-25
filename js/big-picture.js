@@ -51,22 +51,21 @@ const createCommentItem = (comment) => {
 
 const renderComments = (comments) => {
   commentsLoader.classList.remove('hidden');
-  const сommentsList = comments.slice();
-  console.log(сommentsList);
+  // const сommentsList = comments.slice();
+  // console.log(сommentsList);
   const renderCommentsSlice = () => {
     const commentsFragment = document.createDocumentFragment();
-    const commentsToShow = сommentsList.slice(offset, offset + MAX_COMMENTS_TO_SHOW);
-    if (commentsToShow.length < MAX_COMMENTS_TO_SHOW) {
-
-    }
-    console.log(commentsToShow);
+    const commentsToShow = comments.slice(offset, offset + MAX_COMMENTS_TO_SHOW);
     commentsToShow.forEach((comment) => {
       commentsFragment.appendChild(createCommentItem(comment));
     });
     commentsContainer.appendChild(commentsFragment);
-    if (сommentsList.length === offset + commentsToShow.length) {
+    if (comments.length === offset + commentsToShow.length) {
       loadCommentsButton.classList.add('hidden');
     }
+    // console.log(comments.length);
+    // console.log(offset + commentsToShow.length);
+    // console.log(commentsToShow.length);
   };
   commentsContainer.innerHTML = '';
   renderCommentsSlice();

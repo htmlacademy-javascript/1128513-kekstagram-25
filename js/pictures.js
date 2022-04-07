@@ -1,12 +1,13 @@
-import {createPhotos} from './data.js';
+// import {createPhotos} from './data.js';
 import {showBigPicture} from './big-picture.js';
 
 const container = document.querySelector('.pictures');
 const template = document.querySelector('#picture').content.querySelector('.picture');
 
-const photos = createPhotos();
+// const photos = createPhotos();
 const fragment = document.createDocumentFragment();
 
+// функция создающая один фрагмент фотографии
 const createUserPhoto = (picture) => {
   const element = template.cloneNode(true);
   element.querySelector('.picture__img').src = picture.url;
@@ -18,9 +19,9 @@ const createUserPhoto = (picture) => {
   fragment.appendChild(element);
 };
 
-
-const renderUserPhotos = () => {
-  photos.forEach((picture) => {
+// здесь создаются все 25
+const renderUserPhotos = (pictures) => {
+  pictures.forEach((picture) => {
     createUserPhoto(picture);
   });
   return container.appendChild(fragment);
