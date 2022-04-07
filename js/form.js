@@ -130,7 +130,6 @@ const submitForm = (onSuccess) => {
           onSuccess();
           unblockSubmitButton();
           ShowMessageSucces();
-          showAlert('Ой, кажется что-то пошло не так');
         },
         () => {
           showAlert('Не удалось отправить форму. Попробуйте ещё раз');

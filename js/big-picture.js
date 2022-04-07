@@ -89,12 +89,22 @@ const showBigPicture = (picture) => {
 
   renderComments(picture.comments);
 
-  // loadCommentsButton.addEventListener('click', () => {
-
-  // });
-
   closeButton.addEventListener('click', onPopupCloseButtonClick);
   document.addEventListener('keydown', onPopupEscKeydown);
 };
 
 export {showBigPicture};
+
+// const getData = (onSuccess, onFail) => {
+//   fetch('https://25.javascript.pages.academy/kekstagram/data')
+//     .then((response) => {
+//       if (response.ok) {
+//         response.json();
+//       } else {
+//         onFail();
+//       }
+//     })
+//     .catch(() => {
+//       onFail();
+//     });
+// };
