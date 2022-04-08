@@ -1,7 +1,7 @@
 import {isEscapeKey} from './util.js';
 import {onFilterButtonChange, onScaleButtonClick, scaleContainer, effectList, sliderWrapper} from './filters.js';
 import {sendData} from './api.js';
-import {ShowMessageSucces, ShowMessageErorr} from './messages.js';
+import {showMessageSuccess, showMessageError} from './messages.js';
 
 const MAX_STRING_LENGTH = 140;
 const HASHTAGS_QUANTITY = 5;
@@ -128,12 +128,12 @@ const submitForm = (onSuccess) => {
         () => {
           onSuccess();
           unblockSubmitButton();
-          ShowMessageSucces();
+          showMessageSuccess();
           closeUploadPopup();
         },
         () => {
           unblockSubmitButton();
-          ShowMessageErorr();
+          showMessageError();
           closeUploadPopup();
         },
         new FormData(evt.target),

@@ -6,9 +6,8 @@ const closeButton = bigPicture.querySelector('.big-picture__cancel');
 const commentsCount = bigPicture.querySelector('.comments-count');
 const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentsContainer = bigPicture.querySelector('.social__comments');
-const loadCommentsButton = bigPicture.querySelector('.social__comments-loader');
 const body = document.querySelector('body');
-let offset = 0;
+let сount = 0;
 
 
 const onPopupEscKeydown = (evt) => {
@@ -50,22 +49,26 @@ const createCommentItem = (comment) => {
 };
 
 const renderComments = (comments) => {
-  commentsLoader.classList.remove('hidden');
+  commentsContainer.innerHTML = '';
   const renderCommentsSlice = () => {
     const commentsFragment = document.createDocumentFragment();
-    const commentsToShow = comments.slice(offset, offset + MAX_COMMENTS_TO_SHOW);
+    // создаем срез комментов, будет показываться 5 штук
+    const commentsToShow = comments.slice(сount, сount + MAX_COMMENTS_TO_SHOW);
     commentsToShow.forEach((comment) => {
       commentsFragment.appendChild(createCommentItem(comment));
     });
     commentsContainer.appendChild(commentsFragment);
-    if (comments.length === offset + commentsToShow.length) {
-      loadCommentsButton.classList.add('hidden');
+    if (comments.length === сount + commentsToShow.length) {
+      commentsLoader.classList.add('hidden');
+    } else {
+      commentsLoader.classList.remove('hidden');
     }
   };
-  commentsContainer.innerHTML = '';
+  // здесь вызвали чтобы отрисовать 5 штук на странице
   renderCommentsSlice();
   commentsLoader.addEventListener('click', () => {
-    offset += MAX_COMMENTS_TO_SHOW;
+    // изменяем значение сount прибавляя 5, следовательно slice станет (5, 10), отрисуется еще 5 штук
+    сount += MAX_COMMENTS_TO_SHOW;
     renderCommentsSlice();
   });
 };
