@@ -4,10 +4,10 @@ import {isEscapeKey} from './util.js';
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 const successFragment = document.createDocumentFragment();
-const erorrFragment = document.createDocumentFragment();
+const errorFragment = document.createDocumentFragment();
 
 
-const ShowMessageSucces = () => {
+const showMessageSuccess = () => {
   const messageSuccess = successTemplate.cloneNode(true);
   successFragment.appendChild(messageSuccess);
   body.appendChild(successFragment);
@@ -31,10 +31,10 @@ const ShowMessageSucces = () => {
   });
 };
 
-const ShowMessageErorr = () => {
+const showMessageError = () => {
   const messageError = errorTemplate.cloneNode(true);
-  erorrFragment.appendChild(messageError);
-  body.appendChild(erorrFragment);
+  errorFragment.appendChild(messageError);
+  body.appendChild(errorFragment);
   const buttonError = document.querySelector('.error__button');
   const sectionError = document.querySelector('.error');
   const errorInner = document.querySelector('.error__inner');
@@ -55,4 +55,4 @@ const ShowMessageErorr = () => {
   });
 };
 
-export {ShowMessageSucces, ShowMessageErorr};
+export {showMessageSuccess, showMessageError};
