@@ -1,10 +1,12 @@
-import {createPhotos} from './data.js';
 import {renderUserPhotos} from './pictures.js';
-import {renderUploadForm} from './form.js';
 import {initEffects} from './filters.js';
+import {closeUploadPopup} from './form.js';
+import {submitForm} from './form.js';
+import {getData} from './api.js';
 
+getData((pictures) => {
+  renderUserPhotos(pictures);
+});
 
-createPhotos();
-renderUserPhotos();
-renderUploadForm();
+submitForm(closeUploadPopup);
 initEffects();
