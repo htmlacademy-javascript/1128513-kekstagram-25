@@ -1,4 +1,5 @@
 const ALERT_SHOW_TIME = 4000;
+const TIME_OUT_DELAY = 500;
 
 const getRandomIntFromRange = (min, max) => {
   if (max < min) {
@@ -40,6 +41,14 @@ const getRandomUniqueElements = (arr) => {
   return elements;
 };
 
+const debounce = (callback, timeoutDelay = TIME_OUT_DELAY) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
 const showAlert = (message) => {
   const alertContainer = document.createElement('div');
   alertContainer.style.zIndex = 100;
@@ -61,4 +70,4 @@ const showAlert = (message) => {
   }, ALERT_SHOW_TIME);
 };
 
-export {getRandomIntFromRange, getRandomArrayElement, getRandomUniqueElements, isEscapeKey, showAlert};
+export {getRandomIntFromRange, getRandomArrayElement, getRandomUniqueElements, isEscapeKey, showAlert, debounce};
