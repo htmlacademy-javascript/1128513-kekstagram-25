@@ -51,18 +51,13 @@ const createCommentItem = (comment) => {
 const renderComments = (comments) => {
   commentsContainer.innerHTML = '';
   const renderCommentsSlice = () => {
-    console.log('функция запустилась');
     const commentsFragment = document.createDocumentFragment();
     // создаем срез комментов, будет показываться 5 штук
     const commentsToShow = comments.slice(сount, сount + MAX_COMMENTS_TO_SHOW);
-    console.log('commentsToShow',commentsToShow.length);
-    console.log("сount", сount);
     commentsToShow.forEach((comment) => {
       commentsFragment.appendChild(createCommentItem(comment));
     });
     commentsContainer.appendChild(commentsFragment);
-    console.log('сount + commentsToShow.length', сount + commentsToShow.length);
-    console.log('comments.length', comments.length);
     if (comments.length === сount + commentsToShow.length) {
       commentsLoader.classList.add('hidden');
     } else {
