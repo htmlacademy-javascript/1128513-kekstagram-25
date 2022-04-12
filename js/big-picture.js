@@ -72,7 +72,6 @@ function renderCommentsSlice() {
   commentsToShowCount.innerHTML = `${commentsToShow.length} из <span class="comments-count">${comments.length}</span> комментариев`;
 }
 
-
 const showBigPicture = (picture) => {
   bigPicture.classList.remove('hidden');
   body.classList.add('modal-open');
