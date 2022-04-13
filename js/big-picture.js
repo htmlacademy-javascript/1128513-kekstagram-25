@@ -7,7 +7,7 @@ const commentsLoader = bigPicture.querySelector('.comments-loader');
 const commentsContainer = bigPicture.querySelector('.social__comments');
 const commentsToShowCount = bigPicture.querySelector('.social__comment-count');
 const body = document.querySelector('body');
-let сount = 0;
+let count = 0;
 let comments = [];
 
 const onPopupEscKeydown = (evt) => {
@@ -27,7 +27,7 @@ function closeBigPicture () {
   document.removeEventListener('keydown', onPopupEscKeydown);
   document.removeEventListener('click', onPopupCloseButtonClick);
   commentsLoader.removeEventListener('click', commentsLoaderOnClick);
-  сount = 0;
+  count = 0;
   comments = [];
 }
 
@@ -51,7 +51,7 @@ const createCommentItem = (comment) => {
 
 function commentsLoaderOnClick() {
   // изменяем значение сount прибавляя 5, следовательно slice станет (5, 10), отрисуется еще 5 штук
-  сount += MAX_COMMENTS_TO_SHOW;
+  count += MAX_COMMENTS_TO_SHOW;
   renderCommentsSlice();
 }
 
@@ -59,16 +59,12 @@ function renderCommentsSlice() {
   commentsContainer.innerHTML = '';
   const commentsFragment = document.createDocumentFragment();
   // создаем срез комментов, будет показываться 5 штук, при клике count перезапишется
-  const commentsToShow = comments.slice(0, сount + MAX_COMMENTS_TO_SHOW);
+  const commentsToShow = comments.slice(0, count + MAX_COMMENTS_TO_SHOW);
   commentsToShow.forEach((comment) => {
     commentsFragment.appendChild(createCommentItem(comment));
   });
   commentsContainer.appendChild(commentsFragment);
-  if (comments.length === commentsToShow.length) {
-    commentsLoader.classList.add('hidden');
-  } else {
-    commentsLoader.classList.remove('hidden');
-  }
+  commentsLoader.classList.toggle('hidden', comments.length === commentsToShow.length);
   commentsToShowCount.innerHTML = `${commentsToShow.length} из <span class="comments-count">${comments.length}</span> комментариев`;
 }
 
