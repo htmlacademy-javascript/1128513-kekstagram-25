@@ -3,6 +3,7 @@ import {onFilterButtonChange, onScaleButtonClick, scaleContainer, effectList, sl
 import {sendData} from './api.js';
 import {showMessageSuccess, showMessageError} from './messages.js';
 
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'heic'];
 const MAX_STRING_LENGTH = 140;
 const HASHTAGS_QUANTITY = 5;
 const imgUploadField = document.querySelector('#upload-file');
@@ -15,6 +16,17 @@ const body = document.querySelector('body');
 const hashtagsField = document.querySelector('.text__hashtags');
 const commentsField = document.querySelector('.text__description');
 const regex = /^#[A-Za-zА-Яа-яЁё0-9]{1,19}$/;
+const fileChooser = document.querySelector('.img-upload__input');
+
+const uploadImage = () => {
+  const file = fileChooser.files[0];
+  const fileName = file.name.toLowerCase();
+
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+  if (matches) {
+    imgPreview.src = URL.createObjectURL(file);
+  }
+};
 
 const checkCommentsLength = (value) => value.length <= MAX_STRING_LENGTH;
 
@@ -92,7 +104,6 @@ const unblockSubmitButton = () => {
 
 
 function showUploadPopup (evt) {
-  imgPreview.src = URL.createObjectURL(evt.target.files[0]);
   editPhoto.classList.remove('hidden');
   body.classList.add('modal-open');
   buttonCancel.addEventListener('click', onPopupCloseButtonClick);
@@ -101,6 +112,7 @@ function showUploadPopup (evt) {
   sliderWrapper.classList.add('hidden');
   scaleContainer.addEventListener('click', onScaleButtonClick);
   effectList.addEventListener('change', onFilterButtonChange);
+  uploadImage(evt);
 }
 
 const pristine = new Pristine(form, {
