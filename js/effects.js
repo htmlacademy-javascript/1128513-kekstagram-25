@@ -1,3 +1,6 @@
+const SCALESTEP = 25;
+const MINSCALE= 25;
+const MAXSCALE = 100;
 const effects = {
   chrome: {
     filter: 'grayscale',
@@ -67,36 +70,34 @@ const sliderWrapper = document.querySelector('.effect-level');
 const effectValue = document.querySelector('.effect-level__value');
 const imgPreview = document.querySelector('.img-upload__preview').querySelector('img');
 const effectList = document.querySelector('.effects__list');
-const scaleStep = 25;
-const minScale = 25;
-const maxScale = 100;
 
 
 const onScaleButtonClick = (evt) => {
   const scaleInput = Number.parseInt(scaleValue.value, 10);
   let scaleCount;
   const buttonScale = evt.target;
-  if (buttonScale.matches('.scale__control--bigger') && scaleInput < maxScale) {
-    scaleCount =  scaleInput + scaleStep;
+  if (buttonScale.matches('.scale__control--bigger') && scaleInput < MAXSCALE) {
+    scaleCount =  scaleInput + SCALESTEP;
     scaleValue.value = `${scaleCount}%`;
   }
 
-  if (buttonScale.matches('.scale__control--smaller') && scaleInput > minScale) {
-    scaleCount = scaleInput - scaleStep;
+  if (buttonScale.matches('.scale__control--smaller') && scaleInput > MINSCALE) {
+    scaleCount = scaleInput - SCALESTEP;
     scaleValue.value = `${scaleCount}%`;
   }
 
-  if (scaleCount >= maxScale) {
-    scaleCount = maxScale;
+  if (scaleCount >= MAXSCALE) {
+    scaleCount = MAXSCALE;
     scaleValue.value = `${scaleCount}%`;
   }
 
-  if (scaleCount <= minScale) {
-    scaleCount = minScale;
+  if (scaleCount <= MINSCALE) {
+    scaleCount = MINSCALE;
     scaleValue.value = `${scaleCount}%`;
   }
   imgPreview.style.transform = `scale(${scaleCount / 100})`;
 };
+
 
 const initEffects = () => {
   noUiSlider.create(slider, {
