@@ -98,6 +98,7 @@ const onScaleButtonClick = (evt) => {
   imgPreview.style.transform = `scale(${scaleCount / 100})`;
 };
 
+
 const initEffects = () => {
   noUiSlider.create(slider, {
     range: {
