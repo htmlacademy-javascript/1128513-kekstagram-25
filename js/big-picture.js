@@ -1,5 +1,6 @@
 import {isEscapeKey} from './util.js';
 
+
 const MAX_COMMENTS_TO_SHOW = 5;
 const bigPicture = document.querySelector('.big-picture');
 const closeButton = bigPicture.querySelector('.big-picture__cancel');
@@ -44,7 +45,7 @@ const showBigPicture = (picture) => {
     bigPicture.classList.add('hidden');
     body.classList.remove('modal-open');
     document.removeEventListener('keydown', onPopupEscKeydown);
-    document.removeEventListener('click', onPopupCloseButtonClick);
+    closeButton.removeEventListener('click', onPopupCloseButtonClick);
     commentsLoader.removeEventListener('click', commentsLoaderOnClick);
     count = 0;
   }
